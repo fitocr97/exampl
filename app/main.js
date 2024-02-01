@@ -68,7 +68,7 @@ const animalsPage = () =>{
 const loadLoginTemplate = () => {
 	const template = `
 		<h1>Login</h1>
-		<form id="animal-form">
+		<form id="login-form">
 			<div>
 				<label>Email</label>
 				<input name="email" />
@@ -84,6 +84,23 @@ const loadLoginTemplate = () => {
 	`
 	const body = document.getElementsByTagName('body')[0]
 	body.innerHTML = template
+}
+
+const addLoginListener = () => {
+	const loginForm = document.getElementById('login-form')
+	loginForm.onsubmit = async (e) => {
+		e.preventDefault()
+		const formData = new FormData(animalForm)
+		const data = Object.fromEntries(formData.entries())
+
+		const response = await fetch('/login',{
+			body:JSON.stringify(data),
+			headers:{
+				'Content-Type': 'application/json'
+			}
+		})
+		const responseData = await response.text()
+	}
 }
 
 const checkLogin = () => localStorage.getItem('jwt')
