@@ -42,14 +42,14 @@ const Auth = {
         try {
             const user = await User.findOne({email: body.email})
             if (!user) {
-                res.status(403).send('usuario y/o contraseña incorrecto')
+                res.status(401).send('usuario y/o contraseña incorrecto')
             }else{
                 const isMatch = await bcrypt.compare(body.password, user.password)
                 if (isMatch) {
                     const signed = signToken(user._id)
                     res.status(200).send(signed)
                 }else{
-                    res.status(403).send('usuario y/o contraseña incorrecto')
+                    res.status(401).send('usuario y/o contraseña incorrecto')
                 }
             }
         } catch (error) {

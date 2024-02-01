@@ -90,16 +90,23 @@ const addLoginListener = () => {
 	const loginForm = document.getElementById('login-form')
 	loginForm.onsubmit = async (e) => {
 		e.preventDefault()
-		const formData = new FormData(animalForm)
+		const formData = new FormData(loginForm)
 		const data = Object.fromEntries(formData.entries())
 
-		const response = await fetch('/login',{
+		const response = await fetch('/login', {
+			method:'POST',
 			body:JSON.stringify(data),
 			headers:{
 				'Content-Type': 'application/json'
 			}
 		})
 		const responseData = await response.text()
+		if(response.status >= 300){
+			const errorNode = document.getElementById('error')
+			errorNode.innerHTML = responseData
+		}else{
+			console.lo(responseData)
+		}
 	}
 }
 
@@ -111,5 +118,6 @@ window.onload = () => {
 		animalsPage()
 	}else{
 		loadLoginTemplate()
+		addLoginListener()
 	}
 }
