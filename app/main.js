@@ -173,7 +173,11 @@ const addRegisterListener = () => {
 }
 
 const goToLoginListener = () => {
-
+	const goToLogin = document.getElementById('login')
+	goToLogin.onclick = (e) => {
+		e.preventDefault()
+		loginPage() // ir a login
+	}
 }
 
 const checkLogin = () => localStorage.getItem('jwt')
